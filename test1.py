@@ -6,7 +6,7 @@ from prefect_dask.task_runners import DaskTaskRunner
 def hello_dask():
     print("Hello from Dask1!")
 
-@flow(task_runner=DaskTaskRunner(address="tcp://localhost:8786"))
+@flow#(task_runner=DaskTaskRunner(address="tcp://localhost:8786"))
 def subflow():
     hello_dask.submit()
 
