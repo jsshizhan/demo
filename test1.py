@@ -4,7 +4,7 @@ from prefect_dask.task_runners import DaskTaskRunner
 
 @task
 def hello_dask():
-    print("Hello from Dask!")
+    print("Hello from Dask1!")
 
 @flow(task_runner=DaskTaskRunner(address="tcp://localhost:8786"))
 def subflow():
@@ -13,7 +13,7 @@ def subflow():
 
 @flow(log_prints=True)
 def buy():
-    print("Buying securities")
+    print("Buying securities1")
     subflow()
 
 
