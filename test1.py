@@ -4,20 +4,20 @@ from prefect.deployments import run_deployment,Deployment
 
 @task
 def hello_dask():
-    print("Hello from Dask1!")
+    print("Hello from task!")
 
-@flow
+@flow(flow_run_name="subflow")
 def subflow():
-    hello_dask.submit()
+    print("subflow")
+    return hello_dask.submit()
 
 
-@flow(log_prints=True)
+@flow(log_prints=True,flow_run_name="root_flow")
 def buy():
     run_deployment(
         name="subflow/deployment_subflow",
-        flow_run_name="subflow"
     )
-    print("Buying securities1")
+    print("root flow")
 
 
 if __name__ == "__main__":
