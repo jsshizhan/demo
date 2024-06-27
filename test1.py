@@ -16,6 +16,7 @@ def subflow():
 def buy():
     run_deployment(
         name="deployment_subflow",
+        flow_run_name="subflow"
     )
     print("Buying securities1")
 
