@@ -1,5 +1,4 @@
 from prefect import flow,task
-from prefect_dask.task_runners import DaskTaskRunner
 from prefect.deployments import run_deployment,Deployment
 
 
@@ -7,7 +6,7 @@ from prefect.deployments import run_deployment,Deployment
 def hello_dask():
     print("Hello from Dask1!")
 
-@flow#(task_runner=DaskTaskRunner(address="tcp://localhost:8786"))
+@flow
 def subflow():
     hello_dask.submit()
 
@@ -16,6 +15,7 @@ def subflow():
 def buy():
     run_deployment(
         name="subflow/deployment_subflow",
+        flow_run_name="subflow"
     )
     print("Buying securities1")
 
