@@ -1,5 +1,6 @@
 from prefect import flow,task
 from prefect_dask.task_runners import DaskTaskRunner
+from prefect.deployments import run_deployment,Deployment
 
 
 @task
@@ -13,11 +14,18 @@ def subflow():
 
 @flow(log_prints=True)
 def buy():
+    run_deployment(
+        name="deployment_subflow",
+    )
     print("Buying securities1")
-    subflow()
 
 
 if __name__ == "__main__":
+    buy.from_source(
+        source="https://github.com/jsshizhan/demo.git", 
+        entrypoint="test1.py:subflow"
+    ).deploy(name="deployment_subflow",work_pool_name="desktop-pool")
+
     buy.from_source(
         source="https://github.com/jsshizhan/demo.git", 
         entrypoint="test1.py:buy"
