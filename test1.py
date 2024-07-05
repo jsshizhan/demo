@@ -7,7 +7,7 @@ def hello_dask():
     print("Hello from task!")
 
 @flow(flow_run_name="subflow")
-def subflow():
+def subflow(name:str,age:int):
     print("subflow")
     return hello_dask.submit()
 
